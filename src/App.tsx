@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "./logo.svg";
+
 import "./App.css";
 import Select from "./components/Select/Select";
 
@@ -18,16 +18,31 @@ const args = {
 
 function App() {
   const [value, setValue] = useState("select an option...");
+  const [optionState, setOptionsState] = useState(args.options);
 
   return (
     <div className="container">
       <Select
         value={value}
+        multi
         onChange={(newValue) => {
-          console.log("onchange: newvalue:", newValue);
-          setValue(newValue);
+          if (typeof newValue === "string") {
+            //if value is string, means its single select
+            setValue(newValue);
+          } else {
+            // if value is object, multi select
+            const { checked, id } = newValue.target;
+            console.log("multiselecting...", checked, id);
+            const indexOfId = optionState.findIndex((opt) => opt.label === id);
+
+            let newl = optionState;
+            newl[indexOfId].isSelected = checked;
+            setOptionsState((prev) => ({ ...prev, ...newl[indexOfId] }));
+            console.log("newState:", newl, indexOfId);
+          }
         }}
         {...args}
+        options={optionState}
       />
     </div>
   );

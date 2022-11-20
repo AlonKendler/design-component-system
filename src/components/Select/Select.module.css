@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap');
+
+
+.select-container {
+    width: 300px;
+    background-color: #BCC2C1;
+}
+
+.select-label {}
+
+.selectBox {
+    position: relative;
+}
+
+.selectBox select {
+    width: 100%;
+    font-weight: bold;
+}
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.select-content {}
+
+.showOptions {
+    display: block;
+}
+
+.hideOptions {
+    display: none;
+}
+
+.checkBoxes {
+    background-color: green;
+}
+
+.checkBoxes label {
+    display: block;
+}
+
+.checkBoxes label:hover {
+    background-color: red;
+}

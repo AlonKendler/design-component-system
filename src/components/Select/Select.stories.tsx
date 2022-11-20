@@ -1,6 +1,4 @@
-import { red } from "@mui/material/colors";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { useState } from "react";
 
 import { Select, Selectprops } from "./Select";
 
@@ -26,20 +24,21 @@ singleSelect.args = {
     { id: 3, label: "yellow", isSelected: false },
     { id: 4, label: "green", isSelected: false },
   ],
-  label: "Pick a color:",
-  onChange: (value) => alert(value),
+  label: "Single Select - Pick a color:",
+  onChange: (value) => alert(`single select - value changed to: ${value}`),
+  multi: false,
 };
 
 multipleSelect.args = {
   id: 1,
   options: [
     { id: 0, label: "red", isSelected: false },
-    { id: 1, label: "blue", isSelected: false },
+    { id: 1, label: "blue", isSelected: true },
     { id: 2, label: "purple", isSelected: false },
     { id: 3, label: "yellow", isSelected: false },
     { id: 4, label: "green", isSelected: false },
   ],
-  label: "Pick a color:",
-  onChange: (value) => alert(value),
+  label: "Multi Select - Pick a color:",
+  onChange: (value) => alert(`multi select - value changed to: ${value}`),
   multi: true,
 };
