@@ -21,24 +21,17 @@ export interface Selectprops {
   multi?: boolean;
 }
 
-const SelectedItems = ({ options }: SelectedItemsProps) => {
-  const strlist = options.map((item) => {
-    if (item.isSelected === true) {
-      return item.label;
-    }
-  });
+const SelectedItems = ({ options = [] }: SelectedItemsProps) => {
   return (
-    <div>
-      sss
-      {strlist ? (
-        strlist.map((str) => {
-          return <p>{str}</p>;
-        })
-      ) : (
-        <p>select...</p>
-      )}
+    <div className="tags">{!options && "select"}
+      {options.map((option) => {
+        return (
+          option.isSelected === true ?
+            <label className="tag">{option.label}</label> : null)
+      })}
     </div>
-  );
+  )
+
 };
 export const Select = ({
   id,
@@ -65,16 +58,15 @@ export const Select = ({
       <div className="select-label">{label}</div>
       {multi ? (
         <div className={styles.multipleSelection}>
-          <div className="selectBox" onClick={showCheckboxes}>
-            {value ? (
-              <SelectedItems options={options} />
-            ) : (
-              "select something..."
-            )}
-            {/* <select>
-              <option>Select options</option>
-            </select> */}
-            <div className="overSelect"></div>
+          <div className={styles.selectBox} onClick={showCheckboxes}>
+            <div className={styles.tags}>
+              {options.map((option) => {
+                return (option.isSelected && <div key={option.label} className={styles.tag}>{option.label}</div>)
+              })}
+
+            </div>
+
+            <div className="">{showOptions ? "open" : "close"}</div>
           </div>
 
           <div
@@ -89,12 +81,13 @@ export const Select = ({
             {options &&
               options.map((option) => {
                 return (
-                  <>
+                  <div key={option.id}>
                     <label
                       htmlFor={option.label}
                       key={option.id}
                       onChange={(e) => {
                         onChange(e);
+                        setShowOptions(false);
                       }}
                     >
                       <input
@@ -104,7 +97,7 @@ export const Select = ({
                       />
                       {option.label}
                     </label>
-                  </>
+                  </div>
                 );
               })}
           </div>

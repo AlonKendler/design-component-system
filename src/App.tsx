@@ -8,7 +8,7 @@ const args = {
   options: [
     { id: 0, label: "red", isSelected: false },
     { id: 1, label: "blue", isSelected: false },
-    { id: 2, label: "purple", isSelected: false },
+    { id: 2, label: "purple", isSelected: true },
     { id: 3, label: "yellow", isSelected: false },
     { id: 4, label: "green", isSelected: false },
   ],
@@ -19,6 +19,8 @@ const args = {
 function App() {
   const [value, setValue] = useState("select an option...");
   const [optionState, setOptionsState] = useState(args.options);
+
+  
 
   return (
     <div className="container">
@@ -37,7 +39,7 @@ function App() {
 
             let newl = optionState;
             newl[indexOfId].isSelected = checked;
-            setOptionsState((prev) => ({ ...prev, ...newl[indexOfId] }));
+            setOptionsState(()=>(newl));
             console.log("newState:", newl, indexOfId);
           }
         }}

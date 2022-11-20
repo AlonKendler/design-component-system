@@ -9,7 +9,9 @@
 .select-label {}
 
 .selectBox {
+    
     position: relative;
+    background-color: gray;
 }
 
 .selectBox select {
@@ -45,4 +47,18 @@
 
 .checkBoxes label:hover {
     background-color: red;
+}
+
+.tags{
+    display: flex;
+    flex-direction: row;
+    background: aliceblue;
+    width: fit-content;
+}
+
+.tag{
+    background-color: aquamarine;
+    padding: 4px;
+    margin: 4px;
+    font-size: larger;
 }
