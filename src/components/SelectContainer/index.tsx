@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 
-import Select from "./Select"
+import { option, Select } from "../Select"
 
-export type option = {
-    id: number;
-    label: string;
-    isSelected: boolean;
-};
+
 
 export interface SelectContainerProps {
 
@@ -43,6 +39,7 @@ const SelectContainer = ({ optionsList, label, placeholder, multi }: SelectConta
     }
 
     //refactor this
+
     const handleOnChange = (value: any) => {
         if (typeof value === "string") {
             //if value is string, means its single select
@@ -55,6 +52,8 @@ const SelectContainer = ({ optionsList, label, placeholder, multi }: SelectConta
             modifiedOptions[indexOfId].isSelected = checked;
             setOptions(() => (modifiedOptions));
             console.log("onchange multi:", modifiedOptions, indexOfId);
+
+            alert(getSelectedOptions());
         }
     }
     const getSelectedOptions = () => {
@@ -62,9 +61,6 @@ const SelectContainer = ({ optionsList, label, placeholder, multi }: SelectConta
         return selectedOptions.map((option) => option.label)
 
     }
-
-
-
 
     return (
         <Select
@@ -76,7 +72,6 @@ const SelectContainer = ({ optionsList, label, placeholder, multi }: SelectConta
             selectAll={handleSelectAll}
             deleteOption={handleDeleteOption}
             onChange={handleOnChange}
-            alert={() => alert(getSelectedOptions())}
             options={options}
         />
     );

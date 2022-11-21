@@ -1,6 +1,6 @@
 
 
-import SelectContainer from "./components/Select/SelectContainer";
+import SelectContainer from "./components/SelectContainer";
 
 const args = {
 

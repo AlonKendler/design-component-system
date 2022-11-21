@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import SelectContainer from "./SelectContainer";
+import SelectContainer from ".";
 
 export default {
   title: "Select/Select",
