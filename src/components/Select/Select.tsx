@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ReactComponent as DownArrow } from "../../assets/darrow.svg"
 import { ReactComponent as RemoveIcon } from "../../assets/x.svg"
 import { ReactComponent as SelectAllIcon } from "../../assets/selectall.svg"
+import { ReactComponent as AlertIcon } from "../../assets/alert.svg"
 import styles from "./Select.module.css";
 import { option } from "./SelectContainer";
 
@@ -14,6 +15,7 @@ export interface Selectprops {
   deleteOption: (value: any) => any;
   removeAll: (value: any) => any;
   selectAll: (value: any) => any;
+  alert: (value: any) => any;
   options: Array<option>;
   placeholder?: string;
   multi?: boolean;
@@ -26,6 +28,7 @@ export const Select = ({
   deleteOption,
   removeAll,
   selectAll,
+  alert,
   options,
   placeholder = "No value is selected",
   multi
@@ -44,8 +47,9 @@ export const Select = ({
     <div className={styles.selectContainer}>
       <div className={styles.selectLabel}>{label}</div>
       {multi ? (
-        <div className={styles.multipleSelection}>
+        <>
           <div className={styles.selectBox} >
+          <AlertIcon onClick={alert} className={styles.removeIcon} />
             <div className={styles.tagsContainer}>
               {choosenOptions.length == 0 && <span>{placeholder}</span>}
               {choosenOptions.map((option) => {
@@ -58,9 +62,11 @@ export const Select = ({
                   ))
               })}
             </div>
-            <SelectAllIcon onClick={selectAll} className={styles.removeIcon} />
-            <RemoveIcon onClick={removeAll} className={styles.removeIcon} />
-            <DownArrow onClick={() => setShowOptions((prev) => !prev)} className={styles.downArrowIcon} />
+            <div className={styles.buttonsContainer}>
+              {choosenOptions.length < options.length && <SelectAllIcon onClick={selectAll} className={styles.removeIcon} />}
+              {choosenOptions.length > 0 && <RemoveIcon onClick={removeAll} className={styles.removeIcon} />}
+              <DownArrow onClick={() => setShowOptions((prev) => !prev)} className={styles.downArrowIcon} />
+            </div>
           </div>
 
           <div className={`${styles.optionsContainer} 
@@ -80,11 +86,11 @@ export const Select = ({
               );
             })}
           </div>
-        </div>
+        </>
       ) : (
         // singleOption - for now separete
         <select
-          className="select-content"
+          className={styles.selectBox}
           value={value}
           onChange={(e) => {
             onChange(e.target.value);
@@ -96,7 +102,7 @@ export const Select = ({
             options.map((option) => {
               return (
                 <>
-                  <option key={option.id}>{option.label}</option>
+                  <option className={styles.optionsContainer} key={option.id}>{option.label}</option>
                 </>
               );
             })}

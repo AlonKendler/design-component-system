@@ -4,7 +4,7 @@
 .selectContainer {
     width: fit-content;
     /* min-width: 300px; */
-    
+
     display: flex;
     flex-direction: column;
 }
@@ -19,7 +19,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     background-color: rgb(255, 255, 255);
-    border-color: rgb(204,204,204);
+    border-color: rgb(204, 204, 204);
     border-radius: 4px;
     border-width: 1px;
     border-style: solid;
@@ -27,7 +27,7 @@
     min-height: 38px;
     position: relative;
     transition: all 100ms ease 0s;
-
+    min-width: 454px;
     /* max-width: 400px; */
 }
 
@@ -62,7 +62,7 @@
     padding: 8px;
     overflow: hidden;
     overflow-y: scroll;
-   max-height: 200px;
+    max-height: 200px;
 }
 
 .optionsContainer label {
@@ -82,7 +82,7 @@
     overflow-x: scroll;
 }
 
-.tags{
+.tags {
     display: flex;
     align-items: center;
     /* min-width: 0px; */
@@ -92,7 +92,7 @@
     box-sizing: border-box;
 }
 
-.tag{
+.tag {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -103,24 +103,18 @@
     box-sizing: border-box;
 }
 
-.tagButton{
-    -webkit-box-align: center;
-    align-items: center;
-    display: flex;
-    border-radius: 2px;
-    padding-left: 4px;
-    padding-right: 4px;
-    box-sizing: border-box;
+.buttonsContainer {
+    /* width: 80px; */
 }
 
-.downArrowIcon{
+.downArrowIcon {
     height: 20px;
     width: 20px;
     opacity: 50%;
     padding: 4px;
 }
 
-.removeIcon{
+.removeIcon {
     height: 20px;
     width: 20px;
     opacity: 50%;

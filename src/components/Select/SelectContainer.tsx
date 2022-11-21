@@ -57,6 +57,13 @@ const SelectContainer = ({ optionsList, label, placeholder, multi }: SelectConta
             console.log("onchange multi:", modifiedOptions, indexOfId);
         }
     }
+    const getSelectedOptions = () => {
+        let selectedOptions = options.filter((option) => option.isSelected === true);
+        return selectedOptions.map((option) => option.label)
+
+    }
+
+
 
 
     return (
@@ -69,6 +76,7 @@ const SelectContainer = ({ optionsList, label, placeholder, multi }: SelectConta
             selectAll={handleSelectAll}
             deleteOption={handleDeleteOption}
             onChange={handleOnChange}
+            alert={() => alert(getSelectedOptions())}
             options={options}
         />
     );
