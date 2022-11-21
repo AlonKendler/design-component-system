@@ -10,7 +10,9 @@ const args = {
     { id: 1, label: "blue", isSelected: false },
     { id: 2, label: "purple", isSelected: true },
     { id: 3, label: "yellow", isSelected: false },
-    { id: 4, label: "green", isSelected: false },
+    { id: 5, label: "brown", isSelected: false },
+    { id: 6, label: "lade", isSelected: false },
+    { id: 7, label: "gold", isSelected: false },
   ],
   label: "select component",
   loading: false,
@@ -27,6 +29,15 @@ function App() {
       <Select
         value={value}
         multi
+        removeAll={()=>{
+          console.log("deleting all options...")
+          let newState = optionState;
+          newState.forEach((option)=>option.isSelected=false)
+          setOptionsState(newState)
+        }}
+        deleteOption={(value)=>{
+          console.log("delete item:", value.target)
+        }}
         onChange={(newValue) => {
           if (typeof newValue === "string") {
             //if value is string, means its single select

@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { ReactComponent as DownArrow } from "../../assets/darrow.svg"
+import { ReactComponent as RemoveIcon } from "../../assets/x.svg"
 import styles from "./Select.module.css";
+
 
 type option = {
   id: number;
@@ -7,37 +10,28 @@ type option = {
   isSelected: boolean;
 };
 
-interface SelectedItemsProps {
-  options: Array<option>;
-}
+
 export interface Selectprops {
   id: number;
   label: string;
   loading: boolean;
   value: string;
   onChange: (value: any) => any;
+  deleteOption: (value: any) => any;
+ removeAll: (value: any) => any;
   options: Array<option>;
   placeholder?: string;
   multi?: boolean;
 }
 
-const SelectedItems = ({ options = [] }: SelectedItemsProps) => {
-  return (
-    <div className="tags">{!options && "select"}
-      {options.map((option) => {
-        return (
-          option.isSelected === true ?
-            <label className="tag">{option.label}</label> : null)
-      })}
-    </div>
-  )
 
-};
 export const Select = ({
   id,
   label,
   value,
   onChange,
+  deleteOption,
+  removeAll,
   options,
   loading,
   placeholder = "No value is selected",
@@ -47,6 +41,7 @@ export const Select = ({
   const [showOptions, setShowOptions] = useState(false);
 
   const showCheckboxes = () => {
+    console.log("showOptions triggered:", showOptions)
     if (showOptions) {
       setShowOptions(false);
     } else {
@@ -54,27 +49,32 @@ export const Select = ({
     }
   };
   return (
-    <div className="select-container">
-      <div className="select-label">{label}</div>
+    <div className={styles.selectContainer}>
+      <div className={styles.selectLabel}>{label}</div>
       {multi ? (
         <div className={styles.multipleSelection}>
-          <div className={styles.selectBox} onClick={showCheckboxes}>
-            <div className={styles.tags}>
+          <div className={styles.selectBox} >
+            <div className={styles.tagsContainer}>
               {options.map((option) => {
-                return (option.isSelected && <div key={option.label} className={styles.tag}>{option.label}</div>)
+                return (option.isSelected &&
+                  (
+                    <div key={option.label}className={styles.tags}>
+                      <div  className={styles.tag}>{option.label}</div>
+                      <RemoveIcon className={styles.removeIcon} onClick={(e) => deleteOption(e)}>X</RemoveIcon>
+                    </div>
+                  ))
               })}
-
-            </div>
-
-            <div className="">{showOptions ? "open" : "close"}</div>
+            </div>            
+            <RemoveIcon onClick={removeAll} className={styles.removeIcon}/>
+            <DownArrow onClick={()=>setShowOptions((prev)=>!prev)} className={styles.downArrowIcon}/>
+   
           </div>
 
           <div
             id="checkboxes"
             className={`
-              ${styles.checkBoxes} ${
-              showOptions ? styles.showOptions : styles.hideOptions
-            }
+              ${styles.checkBoxes} ${showOptions ? styles.showOptions : styles.hideOptions
+              }
              
             `}
           >
@@ -103,6 +103,7 @@ export const Select = ({
           </div>
         </div>
       ) : (
+        // singleOption - for now separete
         <select
           className="select-content"
           value={value}

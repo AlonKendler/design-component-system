@@ -1,17 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap');
 
 
-.select-container {
-    width: 300px;
-    background-color: #BCC2C1;
+.selectContainer {
+    width: fit-content;
+    /* min-width: 300px; */
+    
+    display: flex;
+    flex-direction: column;
 }
 
-.select-label {}
+.selectLabel {}
 
 .selectBox {
-    
+    display: flex;
+    align-items: center;
+    cursor: default;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(204,204,204);
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    box-sizing: border-box;
+    min-height: 38px;
     position: relative;
-    background-color: gray;
+    transition: all 100ms ease 0s;
+    max-width: 400px;
 }
 
 .selectBox select {
@@ -49,16 +64,56 @@
     background-color: red;
 }
 
+.tagsContainer {
+    display: flex;
+    width: 340px;
+    flex-wrap: wrap;
+}
+
 .tags{
     display: flex;
-    flex-direction: row;
-    background: aliceblue;
-    width: fit-content;
+    min-width: 0px;
+    background-color: rgb(230, 230, 230);
+    border-radius: 2px;
+    margin: 2px;
+    box-sizing: border-box;
 }
 
 .tag{
-    background-color: aquamarine;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 2px;
+    color: rgb(51, 51, 51);
+    font-size: 85%;
+    padding: 3px 3px 3px 6px;
+    box-sizing: border-box;
+}
+
+.tagButton{
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    border-radius: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    box-sizing: border-box;
+}
+
+.selectBoxButton{
+
+}
+
+.downArrowIcon{
+    height: 20px;
+    width: 20px;
+    opacity: 50%;
     padding: 4px;
-    margin: 4px;
-    font-size: larger;
+}
+
+.removeIcon{
+    height: 20px;
+    width: 20px;
+    opacity: 50%;
+    padding: 4px;
 }
