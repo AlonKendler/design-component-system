@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { option, Select } from "../Select"
+import { option, SelectBase } from "../SelectBase"
 
 
 
@@ -8,7 +8,7 @@ export interface SelectContainerProps {
     label: string;
     options: Array<option>;
     placeholder?: string;
-    multi?: boolean;
+
 }
 
 
@@ -23,8 +23,8 @@ const SelectMulti = (props: SelectContainerProps) => {
 
     return (
         <>
-            <button onClick={() => setValue(values => values.map(v => ({ ...v, isSelected: false })))}>clear all outer state</button>
-            <Select
+            {/* <button onClick={() => setValue(values => values.map(v => ({ ...v, isSelected: false })))}>clear all outer state</button> */}
+            <SelectBase
                 {...props}
                 multi={true}
                 value={value}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { option, Select } from "../Select"
+import { option, SelectBase } from "../SelectBase"
 
 
 
@@ -8,7 +8,7 @@ export interface selectSingleProps {
     label: string;
     options: Array<option>;
     placeholder?: string;
-    multi?: boolean;
+
 }
 
 
@@ -25,7 +25,7 @@ const SelectSingle = (props: selectSingleProps) => {
 
 
     return (
-        <Select
+        <SelectBase
             {...props}
             multi={false}
             value={value}

@@ -12,10 +12,10 @@ const Template: ComponentStory<typeof SelectMulti> = (args: any) => {
 };
 
 
-export const multipleSelect = Template.bind({});
-export const multipleSelectLong = Template.bind({});
+export const colorsExample = Template.bind({});
+export const coutriesLongList = Template.bind({});
 
-multipleSelect.args = {
+colorsExample.args = {
   options: [
     { id: 0, label: "red", isSelected: false },
     { id: 1, label: "blue", isSelected: false },
@@ -25,10 +25,10 @@ multipleSelect.args = {
   ],
   placeholder: "select...",
   label: "Multi Select - Pick a color:",
-  multi: true,
+
 };
 
-multipleSelectLong.args = {
+coutriesLongList.args = {
   options: [
     {
       id: 1,
@@ -102,5 +102,5 @@ multipleSelectLong.args = {
 
   ],
   placeholder: "select...",
-  label: "Multi Select - Pick a color:",
+  label: "Multi Select - Pick a country:",
 };
