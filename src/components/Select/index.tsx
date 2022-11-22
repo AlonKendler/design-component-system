@@ -34,20 +34,17 @@ export const Select = ({
   const [searchableOptions, setSearchableOptions] = useState<option[]>([]);
   const [userInput, setUserInput] = useState("");
 
-  const handleSearchInput = (e: any) => {
-    setUserInput(e.target.value);
-  };
+  const handleSearchInput = (e: any) => { setUserInput(e.target.value); };
+  useEffect(() => { handleSearch(); }, [userInput]) //run this on every change>?
 
   const handleSearch = () => {
     if (userInput !== "") {
-      console.log("handling search")
       let newList = multiselectOptions.filter(option => {
         const lowerCase = option.label.toLocaleLowerCase();
         const filter = userInput.toLocaleLowerCase();
         return lowerCase.includes(filter)
       })
       setSearchableOptions(newList)
-      // alert(newList.map(m => m.label))
     }
     else {
       setSearchableOptions([])
@@ -92,7 +89,6 @@ export const Select = ({
       if (
         value.filter((option: option) => option.isSelected).length !==
         multiselectOptions.filter(option => option.isSelected).length) {
-        console.log("selected multiple")
         setMultiSelectOptions(() => value)
         setSearchableOptions(() => value)
       }
@@ -137,10 +133,9 @@ export const Select = ({
               <DownArrow role="button" tabIndex={0} onClick={handleArrowOnClick} onKeyPress={(e) => e.key === 'Enter' && handleArrowOnClick()} className={styles.downArrowIcon} />
             </div>
           </div>
-
-          <div className={`${styles.optionsContainer} 
-            ${searchableOptions.length ? styles.showOptions : styles.hideOptions}`}>
-            {searchableOptions && searchableOptions.map((option) => {
+          {/*there are two optionsContainer: the search results and one showing all options. render only one conditonaliy */}
+          <div className={`${styles.optionsContainer} ${searchableOptions.length ? styles.showOptions : styles.hideOptions}`}>
+            {searchableOptions.map((option) => {
               return (
                 <div role="option" key={option.id} tabIndex={0} onKeyPress={(e) => e.key === 'Enter' && updateOption(option)} >
                   <label htmlFor={option.label} key={option.id}>
@@ -153,15 +148,14 @@ export const Select = ({
                   </label>
                 </div>
               );
-            })}
+            })
 
+            }
 
-            { }
           </div>
 
-          <div className={`${styles.optionsContainer} 
-            ${showOptions ? styles.showOptions : styles.hideOptions}`}>
-            {multiselectOptions && multiselectOptions.map((option) => {
+          <div className={`${styles.optionsContainer} ${showOptions && !searchableOptions.length ? styles.showOptions : styles.hideOptions}`}>
+            {multiselectOptions && !searchableOptions.length && multiselectOptions.map((option) => {
               return (
                 <div role="option" key={option.id} tabIndex={0} onKeyPress={(e) => e.key === 'Enter' && updateOption(option)} >
                   <label htmlFor={option.label} key={option.id}>
