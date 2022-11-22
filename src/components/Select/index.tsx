@@ -47,24 +47,18 @@ export const Select = ({
     setMultiSelectOptions(newState)
   }
 
-  const handleOnMultiChange = (value: any) => {
-
-    // if value is object, multi select
-    const { checked, id } = value.target;
-    const indexOfId = multiselectOptions.findIndex((opt) => opt.label === id);
+  const updateOption = (option: option) => {
     let newState = [...multiselectOptions];
-    newState[indexOfId].isSelected = checked;
-    setMultiSelectOptions(() => (newState));
-
+    const indexOfId = multiselectOptions.findIndex((opt) => opt.id === option.id);
+    newState[indexOfId].isSelected = !option.isSelected;
+    setMultiSelectOptions(newState)
   }
 
   useEffect(() => {
-
     if (multi) {
       let filteredOptions = multiselectOptions.filter((option) => option.isSelected)
       setFilteredOptions(filteredOptions);
       onChange(multiselectOptions)
-
     }
   }, [multiselectOptions])
 
@@ -72,7 +66,7 @@ export const Select = ({
 
     if (multi) {
 
-      console.log("value", value.filter((option: option) => option.isSelected).length)
+      console.log("value", value.filter((option: option) => option.isSelected))
       console.log("multiselectOptions", multiselectOptions.filter(option => option.isSelected).length)
       if (
         value.filter((option: option) => option.isSelected).length !==
@@ -103,17 +97,17 @@ export const Select = ({
               {filiteredOptions.map((option) => {
                 return (
                   (
-                    <div key={option.label} className={styles.tags}>
+                    <div key={option.id} className={styles.tags}>
                       <div className={styles.tag}>{option.label}</div>
-                      <RemoveIcon className={styles.removeIcon} onClick={() => { deleteOption(option); }} />
+                      <RemoveIcon className={styles.removeIcon} role="button" tabIndex={0} onClick={() => { deleteOption(option); }} onKeyPress={(e) => e.key === 'Enter' && deleteOption(option)} />
                     </div>
                   ))
               })}
             </div>
             <div className={styles.buttonsContainer}>
-              {filiteredOptions.length < options.length && <SelectAllIcon role="button" tabIndex={0} onClick={selectAll} className={styles.removeIcon} />}
-              {filiteredOptions.length > 0 && <RemoveIcon role="button" tabIndex={0} onClick={removeAll} className={styles.removeIcon} />}
-              <DownArrow tabIndex={0} role="button" onClick={handleArrowOnClick} onKeyPress={(e) => e.key === 'Enter' && handleArrowOnClick()} className={styles.downArrowIcon} />
+              {filiteredOptions.length < options.length && <SelectAllIcon role="button" tabIndex={0} onClick={selectAll} onKeyPress={(e) => e.key === 'Enter' && selectAll()} className={styles.removeIcon} />}
+              {filiteredOptions.length > 0 && <RemoveIcon role="button" tabIndex={0} onClick={removeAll} onKeyPress={(e) => e.key === 'Enter' && removeAll()} className={styles.removeIcon} />}
+              <DownArrow role="button" tabIndex={0} onClick={handleArrowOnClick} onKeyPress={(e) => e.key === 'Enter' && handleArrowOnClick()} className={styles.downArrowIcon} />
             </div>
           </div>
 
@@ -121,15 +115,13 @@ export const Select = ({
             ${showOptions ? styles.showOptions : styles.hideOptions}`}>
             {multiselectOptions && multiselectOptions.map((option) => {
               return (
-                <div role="option" key={option.id} tabIndex={0}>
+                <div role="option" key={option.id} tabIndex={0} onKeyPress={(e) => e.key === 'Enter' && updateOption(option)} >
                   <label htmlFor={option.label} key={option.id}>
                     <input
                       type="checkbox"
                       id={option.label}
                       checked={option.isSelected}
-                      onChange={(e) => { handleOnMultiChange(e); }}
-                      onKeyPress={(e) => e.key === 'Enter' && handleOnMultiChange(e)}
-
+                      onChange={() => updateOption(option)}
                     />{option.label}
                   </label>
                 </div>
