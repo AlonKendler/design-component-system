@@ -23,7 +23,7 @@ singleSelect.args = {
     { id: 3, label: "yellow", isSelected: false },
     { id: 4, label: "green", isSelected: false },
   ],
-  placeholder: "select a single thing§...",
+  placeholder: "select a single thing...",
   label: "Single Select - Pick a color:",
   multi: false,
 };
