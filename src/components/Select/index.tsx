@@ -30,7 +30,29 @@ export const Select = ({
 
   const [showOptions, setShowOptions] = useState(false);
   const [multiselectOptions, setMultiSelectOptions] = useState<option[]>(value);
-  const [filiteredOptions, setFilteredOptions] = useState(options);
+  const [filiteredOptions, setFilteredOptions] = useState<option[]>(options);
+  const [searchableOptions, setSearchableOptions] = useState<option[]>([]);
+  const [userInput, setUserInput] = useState("");
+
+  const handleSearchInput = (e: any) => {
+    setUserInput(e.target.value);
+  };
+
+  const handleSearch = () => {
+    if (userInput !== "") {
+      console.log("handling search")
+      let newList = multiselectOptions.filter(option => {
+        const lowerCase = option.label.toLocaleLowerCase();
+        const filter = userInput.toLocaleLowerCase();
+        return lowerCase.includes(filter)
+      })
+      setSearchableOptions(newList)
+      // alert(newList.map(m => m.label))
+    }
+    else {
+      setSearchableOptions([])
+    }
+  }
 
   const removeAll = () => {
     setMultiSelectOptions(previousState => previousState.map(option => ({ ...option, isSelected: false })))
@@ -65,7 +87,6 @@ export const Select = ({
   useEffect(() => {
 
     if (multi) {
-
       console.log("value", value.filter((option: option) => option.isSelected))
       console.log("multiselectOptions", multiselectOptions.filter(option => option.isSelected).length)
       if (
@@ -73,15 +94,14 @@ export const Select = ({
         multiselectOptions.filter(option => option.isSelected).length) {
         console.log("selected multiple")
         setMultiSelectOptions(() => value)
+        setSearchableOptions(() => value)
       }
     }
   }, [value])
 
-
-
   // Check if div is nessesary
   // Make responsive
-  // Accessibility
+  // Accessibility V
   // search
   //
   const handleArrowOnClick = () => setShowOptions((prev) => !prev);
@@ -105,10 +125,38 @@ export const Select = ({
               })}
             </div>
             <div className={styles.buttonsContainer}>
+              <hr style={{ margin: "2px", opacity: "50%" }} />
               {filiteredOptions.length < options.length && <SelectAllIcon role="button" tabIndex={0} onClick={selectAll} onKeyPress={(e) => e.key === 'Enter' && selectAll()} className={styles.removeIcon} />}
               {filiteredOptions.length > 0 && <RemoveIcon role="button" tabIndex={0} onClick={removeAll} onKeyPress={(e) => e.key === 'Enter' && removeAll()} className={styles.removeIcon} />}
+              <hr style={{ margin: "2px", opacity: "50%" }} />
+              <div onKeyPress={(e) => e.key === 'Enter' && handleSearch()} className={styles.searchIcon}>
+                <label htmlFor="" onKeyPress={(e) => e.key === 'Enter' && handleSearch()} className={styles.searchIcon}>
+                  <input placeholder="Search..." value={userInput} onChange={handleSearchInput} />
+                </label>
+              </div>
               <DownArrow role="button" tabIndex={0} onClick={handleArrowOnClick} onKeyPress={(e) => e.key === 'Enter' && handleArrowOnClick()} className={styles.downArrowIcon} />
             </div>
+          </div>
+
+          <div className={`${styles.optionsContainer} 
+            ${searchableOptions.length ? styles.showOptions : styles.hideOptions}`}>
+            {searchableOptions && searchableOptions.map((option) => {
+              return (
+                <div role="option" key={option.id} tabIndex={0} onKeyPress={(e) => e.key === 'Enter' && updateOption(option)} >
+                  <label htmlFor={option.label} key={option.id}>
+                    <input
+                      type="checkbox"
+                      id={option.label}
+                      checked={option.isSelected}
+                      onChange={() => updateOption(option)}
+                    />{option.label}
+                  </label>
+                </div>
+              );
+            })}
+
+
+            { }
           </div>
 
           <div className={`${styles.optionsContainer} 
